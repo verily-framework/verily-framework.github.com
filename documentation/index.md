@@ -192,7 +192,7 @@ The table printed above gives us several pieces of information about our small a
 
 To execute this method, point your web browser at: `http://localhost:8000/Hello/sayHello`. Your web browser should render something similar to the figure, below:
 
-![Output of the HelloWorld Example in Verily](/images/hello-world.png)
+![Output of the HelloWorld Example in Verily](/images/hello-world.png){: style="width: 700px;"}
 
 
 Next Steps
