@@ -3,14 +3,141 @@ layout: default
 title: Verily Documentation
 ---
 
-# THis is a H1
+So What is Verily and How Can It Help Me?
+========================================
 
-and this is the content contained therein.
+Web applications are an increasingly important type of application. We do our banking online, manage portfolios, and in the US, we now even manage out health care online. 
+
+However, web application development is also a very trend driven domain. Part of the way in which these trends manifest themselves is the tools and technologies used to construct them. Web application frameworks, for example. While much work has been done that focuses on issues of performance and productivity (eg: [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself), [scaffolding](http://en.wikipedia.org/wiki/Scaffold_(programming)), [convention over configuration](http://en.wikipedia.org/wiki/Convention_over_configuration)) very little has been in the interest of making our web applications more *reliable*. This is what Verily is all about. 
+
+Verily combines application construction recipes with static analysis to help you build more reliable web applications. If this is the sort of thing that you are building, then Verily is for you. 
 
 
-```java
-import java.util.*;
+Installation Quick Start 
+========================
+
+The Verily installer comes with everything you need to start writing applications in Verily right away. To start, download the latest installer from the [main page](/). Verily requires that you have a Java version 1.7+ and a recent version of Maven 3. 
+
+On Windows platforms, you can install Verily simply by running the downloaded JAR file. On other platforms (Linux and Mac) you will have to start the Verily installer via the command line as follows:
+
+~~~ shell
+~ » sudo java -jar verily-<release>.jar
+~~~
+
+Where `release` is the release version of Verily that you downloaded, above.
+
+Once Verily is installed, you can interact with it in a number of ways. The first (and perhaps most simple) is to interact with Verily on the command line. After installing Verily, the `verily` executable will be available on your system's `PATH`. The command options of Verily are summed up in the listing below:
+
+~~~ shell
+~ » verily -help                                                                                                               
+usage: verily
+ -contracts           enable checking of contracts
+ -d                   run this application in the background
+ -fast                do not recalculate dependencies before running
+ -help                display this help
+ -init <dir>          create a new Verily application in the specified
+                      directory
+ -jml <path-to-jml>   the path to the OpenJML installation directory.
+ -n <threads>         the number of threads to create for handling
+                      requests.
+ -new <newclass>      create a new Verily Method+Router pair
+ -nocompile           do not do internal recompile (used for development
+                      only)
+ -nostatic            disables extended static checking
+ -port <portnumber>   port number to bind to (default 8000)
+ -run                 run the application
+ -test                run the unit tests for this application
+ -w                   try to dynamically reload classes and templates (not
+                      for production use)
+ -z3 <path-to-z3>     the path to the Z3 installation directory.
+~~~
+
+While an IDE is not strictly necessary to work with Verily, if you are an IntelliJ user, you can use our simple VerilyIdea Plugin for IntelliJ. You can also get the plugin from the [main page](/). 
 
 
-public class Foo {}
-```
+Hello World in Verily
+=====================
+
+In this section we are going to construct the most minimal version of a Verily application possible: the so-called "Hello World" application. To begin, make sure you have already installed Verily and run the following command on the command prompt from the directory in which you'd like to create your project.
+
+~~~ shell
+~/Projects » verily -init HelloWorld                                                                                           
+[INFO] Creating directory hierarchy...
+[INFO] Done.
+[INFO] Initializing Maven POM...
+[INFO] Done. Execute "verily -run" from inside your new project directory to run this project.
+~~~
+
+After this command completes, you will have a new directory called `HelloWorld` in your current working directory. 
+
+Next, change to the newly-created directory and create a new Verily Method with the `-new` command. 
+
+~~~ shell 
+~/Projects » cd HelloWorld 
+~/Projects/HelloWorld » verily -new Hello                                                                                      
+[INFO] Creating a new Method/Router pair...
+[INFO] Method/Router Pair Created. You can find the files created in the following locations:
+[INFO] M: src/main/java/methods/Hello.java
+[INFO] R: src/main/java/routers/Hello.java
+[INFO] T: src/test/java/HelloTest.java
+~~~
+
+Note that in addition to a Verily Method, a corresponding router and unit test is also created for you. We'll get to that in a moment. 
+
+Writing Your Method
+-------------------
+
+After creating your new method/router pair, you should see the following in the `src/main/java/methods/Hello.java` file: 
+
+~~~ java
+package methods;
+
+import verily.lang.*;
+
+public class Hello {
+
+     public static final void myFunction(ReadableValue<String> message){
+          // TODO - Write your application
+     }
+}
+~~~
+ 
+This class corresponds to a Verily method class. There are several ways to make our example say "Hello World," and as you learn more about Verily you will find other methods, but for the moment we will do this by transforming the class in the following way:
+
+~~~ java
+package methods;
+
+import verily.lang.*;
+
+public class Hello {
+
+     public static final String sayHello(){
+	      return "Hello World";
+     }
+}
+~~~
+
+The thing to note here is the return type of the method `sayHello`. You'll notice that it's a return type of type `String`. This value will then be passed as a formal parameter to your router.
+
+Writing Your Router
+-------------------
+
+To write the corresponding router you will want to replace the generated router in your `src/main/java/routers/Hello.java` with the code in the following listing. 
+
+~~~ java
+package routers;
+
+import verily.lang.*;
+
+public class Hello {
+    
+
+    public static final Content sayHello(String result) {
+	     return new TextContent(result);
+    }
+    
+
+}
+~~~
+
+
