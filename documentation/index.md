@@ -13,7 +13,7 @@ However, web application development is also a very trend driven domain. Part of
 Verily combines application construction recipes with static analysis to help you build more reliable web applications. If this is the sort of thing that you are building, then Verily is for you. 
 
 
-Installation Quick Start 
+Installation 
 ========================
 
 The Verily installer comes with everything you need to start writing applications in Verily right away. To start, download the latest installer from the [main page](/). Verily requires that you have a Java version 1.7+ and a recent version of Maven 3. 
@@ -140,4 +140,62 @@ public class Hello {
 }
 ~~~
 
+In the router, above, we have created the sayHello function. After the method class (`methods.Hello.sayHello`) executes, control will be passed to the `routers.Hello.sayHello` function. Note that the actual parameter value of the router method will be the return value of the `methods.Hello.sayHello`.
 
+The control flow of a Verily application looks like the application flow given in the following diagram. 
+
+
+Running Your Application
+------------------------
+
+Once you have at least one method/router pair set up, you are ready to run your web application. To do this, use the `-run` option of Verily. The output below has been somewhat elided in order to highlight some of the important startup messages Verily will create. 
+
+
+~~~ shell
+~/Projects/HelloWorld » verily -run
+[INFO] Scanning for projects...
+[INFO] Bootstrapping Verily on port 8000...
+[INFO] Constructed new Verily container @ Sun Jun 08 11:44:24 EDT 2014
+[INFO] Created new thread pool with [10] threads.
+[INFO] Starting Verily container...
+[INFO] The Following MRR Endpoints Are Available in Your Application:
+[INFO] +----------------------+---------+-----------------+
+[INFO] | ENDPOINT             | METHOD SPEC | VERBS           |
+[INFO] +----------------------+---------+-----------------+
+[INFO] | /Hello/sayHello      | ()      | [POST, GET]     |
+[INFO] +----------------------+---------+-----------------+
+[INFO] [verily] Reloading project...
+[INFO] Starting services...
+[INFO] ------------------------------------------------------------------------
+[INFO] Verily STARTUP COMPLETE
+[INFO] ------------------------------------------------------------------------
+[INFO] Bootstrapping complete in 4.134 seconds. Verily ready to serve requests at http://localhost:8000/
+~~~
+
+Perhaps the most conceptually most important aspect of the above output is the MRR table, which has been excerpted, below:
+
+~~~ shell
+[INFO] The Following MRR Endpoints Are Available in Your Application:
+[INFO] +----------------------+-------------+-------------+
+[INFO] | ENDPOINT             | METHOD SPEC | VERBS       |
+[INFO] +----------------------+-------------+-------------+
+[INFO] | /Hello/sayHello      | ()          | [POST, GET] |
+[INFO] +----------------------+-------------+-------------+
+~~~
+
+The table printed above gives us several pieces of information about our small application:
+
+* First, we know that there is exactly one application endpoint available. 
+* The endpoint that is available maps to our `sayHello` method at the URL `/Hello/sayHello`.
+* The `sayHello` method has no formal parameters, thus we should not expect to supply any in the request URI. 
+* The `sayHello` method is available for either `POST` or `GET` requests. 
+
+To execute this method, point your web browser at: `http://localhost:8000/Hello/sayHello`. Your web browser should render something similar to the figure, below:
+
+![Output of the HelloWorld Example in Verily](/images/hello-world.png)
+
+
+Next Steps
+==========
+
+In this quick start we've only just scratched the surface of Verily. If you'd like to start using the more advanced facilities of Verily to be more reliable web applications, please take a look at the [full documentation]().
