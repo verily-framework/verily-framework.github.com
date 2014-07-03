@@ -32,9 +32,26 @@
       <div class="header">
         <ul class="nav nav-pills pull-right">
 
+	  {% if page.tab  == "Home" %}
           <li class="active"><a href="/">Home</a></li>
+	  {% else %}
+          <li><a href="/">Home</a></li>
+	  {% endif %}
+
+
+	  {% if page.tab  == "About" %}
+          <li class="active"><a href="/about/">About</a></li>
+	  {% else %}
           <li><a href="/about/">About</a></li>
-          <li><a href="/documentation/">Docs</a></li>
+	  {% endif %}
+
+
+	  {% if page.tab  == "Docs" %}
+	  <li class="active"><a href="/documentation/">Docs</a></li>
+	  {% else %}
+	  <li><a href="/documentation/">Docs</a></li>
+	  {% endif %}
+
           <li><a href="http://www.eecs.ucf.edu/~leavens/formal-methods-lab/people/john-l-singleton/">Contact</a></li>
         </ul>
         <h3 class="text-muted">Verily Framework</h3>

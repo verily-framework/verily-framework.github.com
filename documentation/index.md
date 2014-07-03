@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Verily Documentation
+tab: Docs
 ---
 
 So What is Verily and How Can It Help Me?
